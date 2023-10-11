@@ -15,6 +15,7 @@ let HEIGHT = 300
 
 
 export default function ImageView(props: Props) {
+  console.log(123, props.src)
   // const [src, setSrc] = useState('src/assets/input.JPG')
   const [scale, setScale] = useState(1)
   const [offsetDis, setOffsetDis] = useState({ x: 0, y: 0 })

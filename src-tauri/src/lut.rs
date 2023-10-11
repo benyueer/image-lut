@@ -180,24 +180,33 @@ fn resolve_lut_file(path: &str) -> Vec<Rgbvec> {
 }
 
 fn get_image_pixel(img: DynamicImage) -> Vec<Rgbvec> {
-    let width = img.width();
-    let height = img.height();
+    // let width = img.width();
+    // let height = img.height();
 
-    let mut result = vec![];
+    // let mut result = vec![];
 
-    for y in 0..height {
-        for x in 0..width {
-            let pixel = img.get_pixel(x, y);
-            let (r, g, b) = (pixel[0], pixel[1], pixel[2]);
-            result.push(Rgbvec {
+    img.pixels().map(|(_, _, pixel)| {
+        let (r, g, b) = (pixel[0], pixel[1], pixel[2]);
+            return Rgbvec {
                 r: r as f64,
                 g: g as f64,
                 b: b as f64,
-            });
-        }
-    }
+            };
+    }).collect()
 
-    result
+    // for y in 0..height {
+    //     for x in 0..width {
+    //         let pixel = img.get_pixel(x, y);
+    //         let (r, g, b) = (pixel[0], pixel[1], pixel[2]);
+    //         result.push(Rgbvec {
+    //             r: r as f64,
+    //             g: g as f64,
+    //             b: b as f64,
+    //         });
+    //     }
+    // }
+
+    // result
 }
 
 fn pixel_to_image(pixel: Vec<Rgbvec>, width: u32, height: u32) -> Option<String> {

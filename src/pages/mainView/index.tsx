@@ -16,6 +16,7 @@ export default function MainView(props: Props) {
     curIndex: -1,
     // srcs: []
   })
+  console.log(1111, images, state, curLut, loading)
 
   useEffect(() => {
     const getImages = async () => {
@@ -78,20 +79,20 @@ export default function MainView(props: Props) {
   }
 
   useEffect(() => {
-
     const fun = async () => {
       if (state.curIndex < 0) return
       setLoading(true)
       const imgs = [...images]
       const curImage = imgs[state.curIndex]
+      console.log(1)
       if (!curImage?.srcs[curLut]) {
-        console.log(123)
+        console.log(2)
         const src = await invoke('get_lut_image', {imagePath: curImage.name, lutName: curLut})
-        console.log(53214)
-        curImage.srcs[curLut] = `data/image.jpg;base64,${src}`
+        console.log(3)
+        curImage.srcs[curLut] = `data:image/jpg;base64,${src}`
 
         setImages(imgs)
-        console.log(imgs)
+        console.log(4, imgs)
       }
       setLoading(false)
     }
@@ -124,7 +125,7 @@ export default function MainView(props: Props) {
         <Radio.Group value={curLut} onChange={({target: {value}}) => setLut(value)} buttonStyle="solid">
           <Radio.Button value="Default">默认</Radio.Button>
           <Radio.Button value="Fashion">fashion</Radio.Button>
-          <Radio.Button value="Hicon">Hicon</Radio.Button>
+          <Radio.Button value="HiCon">HiCon</Radio.Button>
           {/* <Radio.Button value="c">Beijing</Radio.Button>
           <Radio.Button value="d">Chengdu</Radio.Button> */}
         </Radio.Group>
