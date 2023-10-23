@@ -74,10 +74,11 @@ async fn read_images(state: State<'_, AppState>) -> Result<Vec<ImageItem>, Strin
                     || file_name.ends_with(".JPG")
                     || file_name.ends_with(".png")
                 {
-                    if let Some(base64_str) = lut::image_to_base64(dir.clone() + "/" + &file_name) {
+                    if let Some(u8_data) = lut::image_to_base64(dir.clone() + "/" + &file_name) {
+                        // println!("{:?}", &u8_data[0..10]);
                         images.push(ImageItem {
                             name: file_name,
-                            data: base64_str,
+                            data: u8_data,
                         });
                     }
                 }

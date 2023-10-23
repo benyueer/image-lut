@@ -21,14 +21,13 @@ export default function MainView(props: Props) {
   useEffect(() => {
     const getImages = async () => {
       const i = await invoke('read_images')
-      const imagesMap = i.map(({name, data}) => ({
+      const imagesMap = i.map(({ name, data }) => ({
         name,
         srcs: {
           Default: `data:image/jpg;base64,${data}`
         }
       }))
       setImages(imagesMap)
-      console.log(imagesMap)
       setState({
         curIndex: 0
       })
@@ -87,7 +86,7 @@ export default function MainView(props: Props) {
       console.log(1)
       if (!curImage?.srcs[curLut]) {
         console.log(2)
-        const src = await invoke('get_lut_image', {imagePath: curImage.name, lutName: curLut})
+        const src = await invoke('get_lut_image', { imagePath: curImage.name, lutName: curLut })
         console.log(3)
         curImage.srcs[curLut] = `data:image/jpg;base64,${src}`
 
@@ -122,7 +121,7 @@ export default function MainView(props: Props) {
         }
       </div>
       <div className={styles.topWrap}>
-        <Radio.Group value={curLut} onChange={({target: {value}}) => setLut(value)} buttonStyle="solid">
+        <Radio.Group value={curLut} onChange={({ target: { value } }) => setLut(value)} buttonStyle="solid">
           <Radio.Button value="Default">默认</Radio.Button>
           <Radio.Button value="Fashion">fashion</Radio.Button>
           <Radio.Button value="HiCon">HiCon</Radio.Button>
@@ -132,4 +131,12 @@ export default function MainView(props: Props) {
       </div>
     </div>
   )
+}
+
+
+function u8ToUrl(imageData) {
+  console.log(imageData.slice(0, 10))
+  const blob = new Blob([Uint8Array.from(imageData)], { type: 'image/png' })
+  const imageUrl = URL.createObjectURL(blob)
+  return imageUrl
 }

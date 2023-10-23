@@ -1,6 +1,6 @@
 use std::{
     fs::{self, File},
-    io::{BufRead, BufReader, Cursor, Seek, SeekFrom},
+    io::{BufRead, BufReader, Cursor, Seek, SeekFrom, Read},
 };
 
 use base64::{encode, write::EncoderWriter};
@@ -223,7 +223,6 @@ fn pixel_to_image(pixel: Vec<Rgbvec>, width: u32, height: u32) -> Option<String>
     
     let dynamic_image: DynamicImage = DynamicImage::ImageRgb8(img);
     let mut cursor = Cursor::new(Vec::new());
-
     dynamic_image.write_to(&mut cursor, image::ImageOutputFormat::Png).expect("Failed to encode image");
     cursor.seek(SeekFrom::Start(0)).expect("Failed to seek cursor");
     let buffer = cursor.into_inner();
